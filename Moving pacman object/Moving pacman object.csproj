@@ -44,19 +44,22 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="CheatPacman.cs" />
     <Compile Include="Direction.cs" />
-    <Compile Include="Enemies.cs" />
+    <Compile Include="Enemy.cs" />
     <Compile Include="Form1.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="Form1.Designer.cs">
       <DependentUpon>Form1.cs</DependentUpon>
     </Compile>
-    <Compile Include="GameBoard.cs" />
+    <Compile Include="GameLogic.cs" />
     <Compile Include="GameLevel.cs" />
+    <Compile Include="IGameLogic.cs" />
+    <Compile Include="IPacman.cs" />
     <Compile Include="Mover.cs" />
     <Compile Include="Pacman.cs" />
-    <Compile Include="Pellets.cs" />
+    <Compile Include="Pellet.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <EmbeddedResource Include="Form1.resx">

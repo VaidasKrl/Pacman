@@ -8,10 +8,9 @@ using System.Threading.Tasks;
 
 namespace Moving_pacman_object
 {
-    class Pacman: Mover
+    class Pacman: Mover, IPacman
     {
-        public Rectangle boundaries;
-        public Bitmap _bmpCharClosed;
+        public Bitmap BmpCharClosed;
         Bitmap _bmpCharOpenAllLeft;
         Bitmap _bmpCharOpenAllRight;
         Bitmap _bmpCharOpenAllUp;
@@ -19,13 +18,14 @@ namespace Moving_pacman_object
 
         public bool Alive;
 
-        public int lives;
+        public int Lives;
+       // public Direction CurrentDirection;
 
-        public void DrawPacmanImage(Graphics graphics, Direction direction)
+        public void DrawPacmanImage(Graphics graphics)
         {
             Bitmap b = null;
 
-            switch(direction)
+            switch(CurrentDirection)
             {
                 case Direction.Right:
                     b = _bmpCharOpenAllRight;
@@ -41,32 +41,32 @@ namespace Moving_pacman_object
                     break;
             }
 
-            graphics.DrawImageUnscaled(b, imageLocation.X - 15, imageLocation.Y - 15);
+            graphics.DrawImageUnscaled(b, ImageCurrentLocation.X - 15, ImageCurrentLocation.Y - 15);
 
         }
 
 
         public void GeneratePacman()
         {
-            Graphics graphics;
+            Graphics _graphics;
 
-            SolidBrush b = new SolidBrush(Color.FromArgb(255, 255, 0));
-            SolidBrush CoverBrush = new SolidBrush(Color.Black);
+            SolidBrush _b = new SolidBrush(Color.FromArgb(255, 255, 0));
+            SolidBrush _coverBrush = new SolidBrush(Color.Black);
 
             Point p = new Point(-1, -1);
 
-            _bmpCharClosed = new Bitmap(30, 30);
-            graphics = Graphics.FromImage(_bmpCharClosed);
-            graphics.SmoothingMode = SmoothingMode.AntiAlias;
-            graphics.FillEllipse(b, p.X, p.Y, 30, 30);
+            BmpCharClosed = new Bitmap(30, 30);
+            _graphics = Graphics.FromImage(BmpCharClosed);
+            _graphics.SmoothingMode = SmoothingMode.AntiAlias;
+            _graphics.FillEllipse(_b, p.X, p.Y, 30, 30);
 
             _bmpCharOpenAllLeft = new Bitmap(30, 30);
-            graphics = Graphics.FromImage(_bmpCharOpenAllLeft);
-            graphics.SmoothingMode = SmoothingMode.AntiAlias;
-            graphics.FillEllipse(b, p.X, p.Y, 30, 30);
-            graphics.FillPie(CoverBrush, p.X - 2, p.Y, 41, 30, 135, 90);
-            graphics.FillRectangle(CoverBrush, p.X + 2, p.Y, 6, 6);
-            graphics.FillRectangle(CoverBrush, p.X + 2, p.Y + 25, 6, 6);
+            _graphics = Graphics.FromImage(_bmpCharOpenAllLeft);
+            _graphics.SmoothingMode = SmoothingMode.AntiAlias;
+            _graphics.FillEllipse(_b, p.X, p.Y, 30, 30);
+            _graphics.FillPie(_coverBrush, p.X - 2, p.Y, 41, 30, 135, 90);
+            _graphics.FillRectangle(_coverBrush, p.X + 2, p.Y, 6, 6);
+            _graphics.FillRectangle(_coverBrush, p.X + 2, p.Y + 25, 6, 6);
             _bmpCharOpenAllLeft.MakeTransparent(Color.Black);
 
             _bmpCharOpenAllRight = (Bitmap)_bmpCharOpenAllLeft.Clone();

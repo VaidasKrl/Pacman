@@ -10,25 +10,54 @@ namespace Moving_pacman_object
     public abstract class Mover
     {
 
-        public Point imageLocation;
-        public void Move(Direction direction)
+        public Point ImageCurrentLocation;
+        public Point ImageStartingLocation;
+        public Direction CurrentDirection;
+
+        //public List<Point> _pathPoints = new List<Point>();
+        public virtual void Move(Direction direction)
         {
             if (direction == Direction.Right)
             {
-                imageLocation.X += 1;
+                ImageCurrentLocation.X += 1;
             }
             if (direction == Direction.Left)
             {
-                imageLocation.X -= 1;
+                ImageCurrentLocation.X -= 1;
             }
             if (direction == Direction.Up)
             {
-                imageLocation.Y -= 1;
+                ImageCurrentLocation.Y -= 1;
             }
             if (direction == Direction.Down)
             {
-                imageLocation.Y += 1;
+                ImageCurrentLocation.Y += 1;
             }
         }
+
+        public bool CanMove(List<Point> _p)
+        {
+            switch (CurrentDirection)
+            {
+                case Direction.Left:
+                    ImageCurrentLocation.X -= 1;
+                    break;
+
+                case Direction.Right:
+                    ImageCurrentLocation.X += 1;
+                    break;
+
+                case Direction.Up:
+                    ImageCurrentLocation.Y -= 1;
+                    break;
+
+                case Direction.Down:
+                    ImageCurrentLocation.Y += 1;
+                    break;
+            }
+
+            return _p.Contains(ImageCurrentLocation);
+        }
+
     }
 }

@@ -7,3 +7,12 @@ c:\users\vaidas tps\documents\visual studio 2013\Projects\Moving pacman object\M
 c:\users\vaidas tps\documents\visual studio 2013\Projects\Moving pacman object\Moving pacman object\obj\Debug\Moving pacman object.exe
 c:\users\vaidas tps\documents\visual studio 2013\Projects\Moving pacman object\Moving pacman object\obj\Debug\Moving pacman object.pdb
 C:\Users\Vaidas TPS\Documents\Visual Studio 2013\Projects\Moving pacman object\Moving pacman object\obj\Debug\Moving pacman object.csprojResolveAssemblyReference.cache
+C:\Users\Vaidas TPS\Documents\GitHub\Pacman\Moving pacman object\bin\Debug\Moving pacman object.exe.config
+C:\Users\Vaidas TPS\Documents\GitHub\Pacman\Moving pacman object\obj\Debug\Moving pacman object.exe
+C:\Users\Vaidas TPS\Documents\GitHub\Pacman\Moving pacman object\obj\Debug\Moving pacman object.pdb
+C:\Users\Vaidas TPS\Documents\GitHub\Pacman\Moving pacman object\obj\Debug\Moving pacman object.csprojResolveAssemblyReference.cache
+C:\Users\Vaidas TPS\Documents\GitHub\Pacman\Moving pacman object\obj\Debug\Moving_pacman_object.Form1.resources
+C:\Users\Vaidas TPS\Documents\GitHub\Pacman\Moving pacman object\obj\Debug\Moving_pacman_object.Properties.Resources.resources
+C:\Users\Vaidas TPS\Documents\GitHub\Pacman\Moving pacman object\obj\Debug\Moving pacman object.csproj.GenerateResource.Cache
+C:\Users\Vaidas TPS\Documents\GitHub\Pacman\Moving pacman object\bin\Debug\Moving pacman object.exe
+C:\Users\Vaidas TPS\Documents\GitHub\Pacman\Moving pacman object\bin\Debug\Moving pacman object.pdb
