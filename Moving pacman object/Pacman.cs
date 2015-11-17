@@ -8,24 +8,52 @@ using System.Threading.Tasks;
 
 namespace Moving_pacman_object
 {
-    class Pacman: Mover, IPacman
+    public class Pacman: Mover, IPacman
     {
-        public Bitmap BmpCharClosed;
+        
         Bitmap _bmpCharOpenAllLeft;
         Bitmap _bmpCharOpenAllRight;
         Bitmap _bmpCharOpenAllUp;
         Bitmap _bmpCharOpenAllDown;
 
-        public bool Alive;
+        public string LivesLeft;
+        public Bitmap BmpCharClosed;
 
-        public int Lives;
-       // public Direction CurrentDirection;
+        public bool Alive
+        {
+            get { return _alive; }
+            set { _alive = value; }
+        }
+
+        public int Lives
+        {
+            get { return _lives; }
+            set { _lives = value; }
+        }
+
+        public Point ImageCurrentLocation
+        {
+            get { return _imageCurrentLocation; }
+            set { _imageCurrentLocation = value; }
+        }
+
+        public Point ImageStartingLocation
+        {
+            get { return _imageStartingLocation; }
+            set { _imageStartingLocation = value; }
+        }
+
+        public Direction CurrentDirection
+        {
+            get { return _currentDirection; }
+            set { _currentDirection = value; }
+        }
 
         public void DrawPacmanImage(Graphics graphics)
         {
             Bitmap b = null;
 
-            switch(CurrentDirection)
+            switch(_currentDirection)
             {
                 case Direction.Right:
                     b = _bmpCharOpenAllRight;
@@ -41,7 +69,7 @@ namespace Moving_pacman_object
                     break;
             }
 
-            graphics.DrawImageUnscaled(b, ImageCurrentLocation.X - 15, ImageCurrentLocation.Y - 15);
+            graphics.DrawImageUnscaled(b, _imageCurrentLocation.X - 15, _imageCurrentLocation.Y - 15 );
 
         }
 
@@ -81,5 +109,12 @@ namespace Moving_pacman_object
             _bmpCharOpenAllDown.RotateFlip(RotateFlipType.Rotate270FlipNone);
             _bmpCharOpenAllDown.MakeTransparent(Color.Black);
         }
+
+
+        public override void Move(Direction direction)
+        {
+            base.Move(direction);
+        }
+        
     }
 }

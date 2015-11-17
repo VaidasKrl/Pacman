@@ -8,39 +8,63 @@ using System.Threading.Tasks;
 
 namespace Moving_pacman_object
 {
-    class CheatPacman: Mover, IPacman
+    public class CheatPacman: Mover, IPacman
     {
     
         public Bitmap BmpCharClosed;
+        public bool Alive
+        {
+            get { return _alive; }
+            set { _alive = value; }
+        }
 
-        public bool Alive;
+        public int Lives
+        {
+            get { return _lives; }
+            set { _lives = value; }
+        }
 
-        public int Lives;
-       // public Direction CurrentDirection;
+        public Point ImageCurrentLocation
+        {
+            get { return _imageCurrentLocation; }
+            set { _imageCurrentLocation = value; }
+        }
+
+        public Point ImageStartingLocation
+        {
+            get { return _imageStartingLocation; }
+            set { _imageStartingLocation = value; }
+        }
+
+        public Direction CurrentDirection
+        {
+            get { return _currentDirection; }
+            set { _currentDirection = value; }
+        }
+
 
         public void DrawPacmanImage(Graphics _graphics)
         {
-            _graphics.DrawImageUnscaled(BmpCharClosed, ImageCurrentLocation.X - 30, ImageCurrentLocation.Y - 30);
+            _graphics.DrawImageUnscaled(BmpCharClosed, _imageCurrentLocation.X - 30, _imageCurrentLocation.Y - 30);
         }
 
         public override void Move(Direction direction)
         {
-            //base.Move(direction);
             if (direction == Direction.Right)
             {
-                ImageCurrentLocation.X += 3;
+                _imageCurrentLocation.X += 3;
             }
             if (direction == Direction.Left)
             {
-                ImageCurrentLocation.X -= 3;
+                _imageCurrentLocation.X -= 3;
             }
             if (direction == Direction.Up)
             {
-                ImageCurrentLocation.Y -= 3;
+                _imageCurrentLocation.Y -= 3;
             }
             if (direction == Direction.Down)
             {
-                ImageCurrentLocation.Y += 3;
+                _imageCurrentLocation.Y += 3;
             }
         }
         public void GeneratePacman()
@@ -58,5 +82,6 @@ namespace Moving_pacman_object
             _graphics.FillEllipse(_b, _p.X, _p.Y, 60, 60);
       
         }
+      
     }
 }

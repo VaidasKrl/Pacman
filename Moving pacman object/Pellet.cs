@@ -8,16 +8,16 @@ using System.Windows.Forms;
 
 namespace Moving_pacman_object
 {
-    class Pellet
+    public class Pellet
     {
+        private SolidBrush _brushPowerPellet = new SolidBrush(Color.FromArgb(255, 194, 159));
+
         public List<Point> Pellets;
         public List<Point> SuperPellets;
         public List<int> score = new List<int>();
         public int Sum = 0;
-
         public int GameScore;
-        
-        private SolidBrush _brushPowerPellet = new SolidBrush(Color.FromArgb(255, 194, 159));
+ 
 
         public void DrawPellets(Graphics _graphics)
         {

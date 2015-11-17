@@ -55,13 +55,14 @@
     </Compile>
     <Compile Include="GameLogic.cs" />
     <Compile Include="GameLevel.cs" />
-    <Compile Include="IGameLogic.cs" />
-    <Compile Include="IPacman.cs" />
+    <Compile Include="Interface\IGameLogic.cs" />
+    <Compile Include="Interface\IPacman.cs" />
     <Compile Include="Mover.cs" />
     <Compile Include="Pacman.cs" />
     <Compile Include="Pellet.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="TESTforUnitTest.cs" />
     <EmbeddedResource Include="Form1.resx">
       <DependentUpon>Form1.cs</DependentUpon>
     </EmbeddedResource>

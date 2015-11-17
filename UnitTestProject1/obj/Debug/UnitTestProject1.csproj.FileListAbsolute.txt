@@ -1,0 +1,14 @@
+C:\Users\Vaidas TPS\Documents\GitHub\Pacman\UnitTestProject1\obj\Debug\UnitTestProject1.csprojResolveAssemblyReference.cache
+C:\Users\Vaidas TPS\Documents\GitHub\Pacman\UnitTestProject1\bin\Debug\UnitTestProject1.dll
+C:\Users\Vaidas TPS\Documents\GitHub\Pacman\UnitTestProject1\bin\Debug\UnitTestProject1.pdb
+C:\Users\Vaidas TPS\Documents\GitHub\Pacman\UnitTestProject1\bin\Debug\Moving pacman object.exe
+C:\Users\Vaidas TPS\Documents\GitHub\Pacman\UnitTestProject1\bin\Debug\Moving pacman object.pdb
+C:\Users\Vaidas TPS\Documents\GitHub\Pacman\UnitTestProject1\obj\Debug\UnitTestProject1.dll
+C:\Users\Vaidas TPS\Documents\GitHub\Pacman\UnitTestProject1\obj\Debug\UnitTestProject1.pdb
+F:\Programavimas\.net projektai githube\Pacman\UnitTestProject1\bin\Debug\UnitTestProject1.dll
+F:\Programavimas\.net projektai githube\Pacman\UnitTestProject1\bin\Debug\UnitTestProject1.pdb
+F:\Programavimas\.net projektai githube\Pacman\UnitTestProject1\bin\Debug\Moving pacman object.exe
+F:\Programavimas\.net projektai githube\Pacman\UnitTestProject1\bin\Debug\Moving pacman object.pdb
+F:\Programavimas\.net projektai githube\Pacman\UnitTestProject1\obj\Debug\UnitTestProject1.csprojResolveAssemblyReference.cache
+F:\Programavimas\.net projektai githube\Pacman\UnitTestProject1\obj\Debug\UnitTestProject1.dll
+F:\Programavimas\.net projektai githube\Pacman\UnitTestProject1\obj\Debug\UnitTestProject1.pdb

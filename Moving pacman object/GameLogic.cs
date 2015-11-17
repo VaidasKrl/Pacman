@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Drawing;
 using System.Linq;
 using System.Text;
@@ -8,76 +9,104 @@ using System.Windows.Forms;
 
 namespace Moving_pacman_object
 {
-    class GameLogic: IGameLogic
+    public class GameLogic//: IGameLogic
     {
-
-        private List<Point> _pathPoints = new List<Point>();
-
-        public List<Direction> DirectionList = new List<Direction>();
-
-        public List<int> Score = new List<int>();
-
-        public Pacman Pacman;
-        public List<Enemy> Enemies;
-        public Enemy RedGhost;
-        public Enemy OrangeGhost;
-        public Pellet Pellets;
-        public GameLevel GameLevel;
-
-        public void DrawObjects(Graphics _graphics)
+        public enum GameModeType
         {
-            Pacman.DrawPacmanImage(_graphics);
-            DrawEnemyImage(_graphics, Enemies);
-            Pellets.DrawPellets(_graphics);
-            PaintGameBoard(_graphics);
-
+            Common = 1,
+            Cheat = 2
         }
 
-        public void DrawEnemyImage(Graphics _graphics, List<Enemy> _enemies)
+        private List<Point> _pathPoints = new List<Point>();
+        public GameModeType GameMode { get; private set; }
+
+        public IPacman Pacman { get; private set; }
+        public List<Enemy> Enemies;
+        public Pellet Pellets;
+        public GameLevel GameLevel;
+        public string LivesLeft;
+
+        public GameLogic(GameModeType gameMode = GameModeType.Common)
         {
-            for (int i = 0; i < _enemies.Count(); i++)
-            {
-                _graphics.DrawImageUnscaled(_enemies[i].BmpCharUp1, _enemies[i].ImageCurrentLocation.X - 15, _enemies[i].ImageCurrentLocation.Y - 15);
-            }
+            GameMode = gameMode;
+            InitializeCharacters();
+            GeneratePathPoints();
         }
 
         public void InitializeCharacters()
         {
-            Pacman = new Pacman();
-            Pacman.ImageStartingLocation = new Point(220, 416);
-            Pacman.ImageCurrentLocation = Pacman.ImageStartingLocation;
-            Pacman.GeneratePacman();
-            Pacman.Alive = true;
-            Pacman.Lives = 3;
+            switch (GameMode)
+            {
+                case GameModeType.Cheat:
+                    Pacman = CreateCheatPacman();
+                    break;
+                default:
+                    Pacman = CreateCommonPacman();
+                    break;
+            }
 
-            RedGhost = new Enemy();
-            RedGhost.ImageStartingLocation = new Point(220, 203);
-            RedGhost.ImageCurrentLocation = RedGhost.ImageStartingLocation;
-            RedGhost.GhostColor = Color.FromArgb(255, 0, 0);
-            RedGhost.GenerateEnemy();
-            RedGhost.CurrentDirection = Direction.Left;
-
-            OrangeGhost = new Enemy();
-            OrangeGhost.ImageStartingLocation = new Point(205, 203);
-            OrangeGhost.ImageCurrentLocation = OrangeGhost.ImageStartingLocation;
-            OrangeGhost.GhostColor = Color.FromArgb(255, 184, 71);
-            OrangeGhost.GenerateEnemy();
-            OrangeGhost.CurrentDirection = Direction.Right;
-
+            Enemies = new List<Enemy>()
+            {
+               CreateEnemy(new Point(220, 203), new Point(220, 203), Color.FromArgb(255, 0, 0), Direction.Left),
+               CreateEnemy(new Point(205, 203), new Point(205, 203), Color.FromArgb(255, 184, 71), Direction.Right)
+            };
+            
+            
             Pellets = new Pellet();
-            GameLevel = new GameLevel();
-
-            Enemies = new List<Enemy>();
-            Enemies.Add(RedGhost);
-            Enemies.Add(OrangeGhost);
-
+            GameLevel = new GameLevel();            
             GenerateCharacters();
-    
         }
+
+        private Enemy CreateEnemy(Point imageStartingLocation, Point imageCurrentLocation, Color color, Direction currentDirection)
+        {
+            var enemy = new Enemy()
+            {
+                ImageStartingLocation = imageStartingLocation,
+                ImageCurrentLocation = imageCurrentLocation,
+                GhostColor = color,
+                CurrentDirection = currentDirection,
+            };
+
+            enemy.GenerateEnemy();
+
+            return enemy;
+
+        }
+
+        private IPacman CreateCommonPacman()
+        {
+
+            var pacMan = new Pacman()
+            {
+                ImageStartingLocation = new Point(220, 416),
+                ImageCurrentLocation = new Point(220, 416),
+                Alive = true,
+                
+                Lives = 3,
+            };
+            pacMan.GeneratePacman();
+
+            return pacMan;
+        }
+
+        private IPacman CreateCheatPacman()
+        {
+            var pacMan = new CheatPacman()
+            {
+                ImageStartingLocation = new Point(220, 416),
+                ImageCurrentLocation = new Point(220, 416),         
+                Alive = true,
+                Lives = 3
+            };
+
+            pacMan.GeneratePacman();
+
+            return pacMan;
+        }
+
 
         public void GenerateCharacters()
         {
-            Pacman.GeneratePacman();
             Pellets.GeneratePellets();
             for(int i = 0; i < Enemies.Count(); i++)
             {
@@ -88,24 +117,27 @@ namespace Moving_pacman_object
 
         private void AddPathPoints(int x1, int y1, int x2, int y2)
         {
-            Point _p;
+            Point currentPathPoint;
 
             if (x1 == x2)
             {
                 if (y1 < y2)
                 {
-                    for (int y = (int)y1; y < y2 + 1; y++)
+                    for (int y = y1; y < y2 + 1; y++)
                     {
-                        _p = new Point((int)x1, y);
-                        if (!_pathPoints.Contains(_p)) _pathPoints.Add(_p);
+                        currentPathPoint = new Point(x1, y);
+                        if (!_pathPoints.Contains(currentPathPoint))
+                        {
+                            _pathPoints.Add(currentPathPoint);
+                        }
                     }
                 }
                 else
                 {
-                    for (int y = (int)y1; y > y2 - 1; y--)
+                    for (int y = y1; y > y2 - 1; y--)
                     {
-                        _p = new Point((int)x1, y);
-                        if (!_pathPoints.Contains(_p)) _pathPoints.Add(_p);
+                        currentPathPoint = new Point(x1, y);
+                        if (!_pathPoints.Contains(currentPathPoint)) _pathPoints.Add(currentPathPoint);
                     }
                 }
             }
@@ -113,89 +145,25 @@ namespace Moving_pacman_object
             {
                 if (x1 < x2)
                 {
-                    for (int x = (int)x1; x < x2 + 1; x++)
+                    for (int x = x1; x < x2 + 1; x++)
                     {
-                        _p = new Point(x, (int)y1);
-                        if (!_pathPoints.Contains(_p)) _pathPoints.Add(_p);
+                        currentPathPoint = new Point(x, y1);
+                        if (!_pathPoints.Contains(currentPathPoint)) _pathPoints.Add(currentPathPoint);
                     }
                 }
                 else
                 {
-                    for (int x = (int)x1; x > x2 - 1; x--)
+                    for (int x = x1; x > x2 - 1; x--)
                     {
-                        _p = new Point(x, (int)y1);
-                        if (!_pathPoints.Contains(_p)) _pathPoints.Add(_p);
+                        currentPathPoint = new Point(x, y1);
+                        if (!_pathPoints.Contains(currentPathPoint)) _pathPoints.Add(currentPathPoint);
                     }
                 }
             }
         }
 
-        public bool CanMove(Point p, Direction d)
-        {
-            switch (d)
-            {
-                case Direction.Left:
-                    p.X -= 1;
-                    break;
-
-                case Direction.Right:
-                    p.X += 1;
-                    break;
-
-                case Direction.Up:
-                    p.Y -= 1;
-                    break;
-
-                case Direction.Down:
-                    p.Y += 1;
-                    break;
-            }
-
-            return _pathPoints.Contains(p);
-        }
-
-        public bool CheckIfPacmanAlive()
-        {
-            for (int i = 0; i < Enemies.Count(); i++ )
-            {
-                if (Enemies[i].ImageCurrentLocation == Pacman.ImageCurrentLocation)
-                {
-                    Pacman.Lives -= 1;
-                    Pacman.Alive = false;
-                }
-   
-            }
-            return Pacman.Alive;
-        }
 
         public void MovePacman(Direction direction)
-        {
-            switch(direction)
-            {
-                case Direction.Right:
-                    Pacman.CurrentDirection = Direction.Right;
-                    break;
-                case Direction.Left:
-                    Pacman.CurrentDirection = Direction.Left;
-                    break;
-                case Direction.Up:
-                    Pacman.CurrentDirection = Direction.Up;
-                    break;
-                case Direction.Down:
-                    Pacman.CurrentDirection = Direction.Down;
-                    break;
-            }
-
-            if (CanMove(Pacman.ImageCurrentLocation, Pacman.CurrentDirection))
-            {
-                Pacman.Move(Pacman.CurrentDirection);
-            }
-
-                Pellets.RemovePellet(Pacman.ImageCurrentLocation);
-
-        }
-
-        public void MoveEnemy(Direction direction)
         {
             switch (direction)
             {
@@ -213,14 +181,85 @@ namespace Moving_pacman_object
                     break;
             }
 
-            for (int i = 0; i < Enemies.Count(); i++)
+            if(Pacman.CanMove(Pacman.ImageCurrentLocation, Pacman.CurrentDirection, _pathPoints))
             {
-                if (CanMove(Enemies[i].ImageCurrentLocation, Enemies[i].CurrentDirection))
-                {
-                    Enemies[i].Move(Enemies[i].CurrentDirection);
-                }
+                Pacman.Move(Pacman.CurrentDirection);
             }
 
+            Pellets.RemovePellet(Pacman.ImageCurrentLocation);
+        }
+
+
+        public bool CheckIfPacmanAlive()
+        {
+            for (int i = 0; i < Enemies.Count; i++)
+            {
+                if (Enemies[i].ImageCurrentLocation == Pacman.ImageCurrentLocation)
+                {
+                    return false;
+                }
+            }
+            return true;
+        }
+
+        public void CheckWhichDirectionEnemyMove()
+        {
+            for (int i = 0; i < Enemies.Count(); i++)
+            {
+                var enemy = Enemies[i];
+                enemy.WhichDirectionCanMove(enemy.ImageCurrentLocation, _pathPoints);
+            }
+
+        }
+
+        public void MoveEnemies()
+        {
+            CheckWhichDirectionEnemyMove();
+
+            for (int i = 0; i < Enemies.Count(); i++)
+            {
+                if (Enemies[i].CanMove(Enemies[i].ImageCurrentLocation, Enemies[i].CurrentDirection, _pathPoints))
+                {
+                    {
+                        Enemies[i].Move(Enemies[i].CurrentDirection);
+
+                        if(CheckIfPacmanAlive() == false)
+                        {
+                            Pacman.Lives -= 1;
+                            CheckCanContinueGamePlay();
+                        }
+
+                    }
+                }
+                else
+                {
+                    Enemies[i].CurrentDirection = Enemies[i].GetRandomDirection();
+                }
+            }
+        }
+
+        public void CheckCanContinueGamePlay()
+        {
+            if (Pacman.Lives > 0)
+            {
+                RestartCharactersLocations();
+                Pacman.Alive = true;
+                LivesLeft = Pacman.Lives.ToString();
+            }
+            else
+            {
+                Pacman.Alive = false;
+                LivesLeft = "GAME OVER";
+            }
+        }
+
+        private void RestartCharactersLocations()
+        {
+            Pacman.ImageCurrentLocation = Pacman.ImageStartingLocation;
+            for (int i = 0; i < Enemies.Count(); i++)
+            {
+                Enemies[i].ImageCurrentLocation = Enemies[i].ImageStartingLocation;
+            }
         }
 
         public void PaintGamePath(Graphics _graphics)

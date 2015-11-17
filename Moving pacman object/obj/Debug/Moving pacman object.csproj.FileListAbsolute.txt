@@ -16,3 +16,11 @@ C:\Users\Vaidas TPS\Documents\GitHub\Pacman\Moving pacman object\obj\Debug\Movin
 C:\Users\Vaidas TPS\Documents\GitHub\Pacman\Moving pacman object\obj\Debug\Moving pacman object.csproj.GenerateResource.Cache
 C:\Users\Vaidas TPS\Documents\GitHub\Pacman\Moving pacman object\bin\Debug\Moving pacman object.exe
 C:\Users\Vaidas TPS\Documents\GitHub\Pacman\Moving pacman object\bin\Debug\Moving pacman object.pdb
+F:\Programavimas\.net projektai githube\Pacman\Moving pacman object\bin\Debug\Moving pacman object.exe.config
+F:\Programavimas\.net projektai githube\Pacman\Moving pacman object\bin\Debug\Moving pacman object.exe
+F:\Programavimas\.net projektai githube\Pacman\Moving pacman object\bin\Debug\Moving pacman object.pdb
+F:\Programavimas\.net projektai githube\Pacman\Moving pacman object\obj\Debug\Moving_pacman_object.Form1.resources
+F:\Programavimas\.net projektai githube\Pacman\Moving pacman object\obj\Debug\Moving_pacman_object.Properties.Resources.resources
+F:\Programavimas\.net projektai githube\Pacman\Moving pacman object\obj\Debug\Moving pacman object.csproj.GenerateResource.Cache
+F:\Programavimas\.net projektai githube\Pacman\Moving pacman object\obj\Debug\Moving pacman object.exe
+F:\Programavimas\.net projektai githube\Pacman\Moving pacman object\obj\Debug\Moving pacman object.pdb

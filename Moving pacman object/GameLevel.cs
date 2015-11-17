@@ -7,40 +7,28 @@ using System.Timers;
 
 namespace Moving_pacman_object
 {
-    class GameLevel
+    public class GameLevel
     {
-        public int Level;
-       // public Pellet Pellets;
-       // public GameLogic GameLogic;
+        private int _level = 1;
+        public int Level { get { return _level; } }
+
+        public string PacmanLives;
 
         public bool IncreaseLevel(GameLogic gameLogic)
         {
-            if (gameLogic.Pellets.Pellets.Count() == 0 && gameLogic.Pellets.SuperPellets.Count() == 0)
+            if (gameLogic.Pellets.Pellets.Count == 0 && gameLogic.Pellets.SuperPellets.Count == 0)
             {
                 return true;
             }
-            else
-                return false;
+            
+            return false;
         }
 
-        public void ContinueLevel(System.Windows.Forms.Label labelLives, Pacman pacman, List<Enemy> enemies)
+        public int LoadNextLevel()
         {
-            if (pacman.Lives > 0)
-            {
-                pacman.ImageCurrentLocation = pacman.ImageStartingLocation;
-                for (int i = 0; i < enemies.Count(); i++)
-                {
-                    enemies[i].ImageCurrentLocation = enemies[i].ImageStartingLocation;
-                }
-                pacman.Alive = true;
-                labelLives.Text = pacman.Lives.ToString();
-            }
-            else
-            {
-                pacman.Alive = false;
-                labelLives.Text = "GAME OVER";
-            }
+            return _level++;
         }
+
         
     }
 }

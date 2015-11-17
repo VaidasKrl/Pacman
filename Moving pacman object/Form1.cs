@@ -13,38 +13,43 @@ namespace Moving_pacman_object
 {
     public partial class Form1 : Form
     {
-        GameLogic gameLogic;
+        private GameLogic gameLogic;
 
         public Form1()
         {
             InitializeComponent();
             gameLogic = new GameLogic();
-            gameLogic.GeneratePathPoints();
-            gameLogic.InitializeCharacters();
-
-            scoreLabel.Text = "";
-            labelLives.Text = gameLogic.Pacman.Lives.ToString();
-            levelLabel.Text = gameLogic.GameLevel.Level.ToString();
 
         }
 
         private void Form1_Paint_1(object sender, PaintEventArgs e)
         {
-            gameLogic.DrawObjects(e.Graphics);
+
+            for (int i = 0; i < gameLogic.Enemies.Count(); i++)
+            {
+                gameLogic.Enemies[i].DrawEnemyImage(e.Graphics);
+            }
+            gameLogic.Pellets.DrawPellets(e.Graphics);
+            gameLogic.PaintGameBoard(e.Graphics);
+            gameLogic.Pacman.DrawPacmanImage(e.Graphics);
+
         }
 
         private void gameTimer_Tick(object sender, EventArgs e)
         {
+
             if (gameLogic.Pacman.Alive)
-            {      
+            {
                 gameLogic.MovePacman(gameLogic.Pacman.CurrentDirection);
             }
+
             scoreLabel.Text = gameLogic.Pellets.Sum.ToString();
 
-            if (gameLogic.GameLevel.IncreaseLevel(this.gameLogic))
+            if (gameLogic.GameLevel.IncreaseLevel(gameLogic))
             {
                 enemyTimer.Interval -= 5;
-                gameLogic.GameLevel.Level++;
+                gameLogic.GameLevel.LoadNextLevel();
+                gameLogic.Pellets.GeneratePellets();
             }
 
             Invalidate();
@@ -73,42 +78,22 @@ namespace Moving_pacman_object
         private void enemyTimer_Tick(object sender, EventArgs e)
         {
 
-            for (int i = 0; i < gameLogic.Enemies.Count(); i++)
-            {
-                gameLogic.Enemies[i].WhichDirectionCanMove(gameLogic.Enemies[i].ImageCurrentLocation, gameLogic);
+                gameLogic.MoveEnemies();
 
-                if (gameLogic.CanMove(gameLogic.Enemies[i].ImageCurrentLocation, gameLogic.Enemies[i].CurrentDirection))
+                for (int i = 0; i < gameLogic.Enemies.Count(); i++)
                 {
-                    {
-                        gameLogic.Enemies[i].Move(gameLogic.Enemies[i].CurrentDirection);
-
-                        if (gameLogic.Enemies[i].ImageCurrentLocation == gameLogic.Pacman.ImageCurrentLocation)
-                        {
-                            gameLogic.Pacman.Lives -= 1;
-                            gameLogic.Pacman.Alive = false;
-                            gameLogic.GameLevel.ContinueLevel(labelLives, gameLogic.Pacman, gameLogic.Enemies);
-                        }
-                         
-                    }
+                    gameLogic.Enemies[i].DirectionList.Clear();
                 }
-                else
-                {
-                    gameLogic.Enemies[i].CurrentDirection = gameLogic.Enemies[i].GetRandomDirection();
-                }
-
-                gameLogic.Enemies[i].DirectionList.Clear();
 
                 levelLabel.Text = gameLogic.GameLevel.Level.ToString();
-            }
+                labelLives.Text = gameLogic.Pacman.Lives.ToString();
 
             Invalidate();
         }
 
-
-        private void Form1_Load(object sender, EventArgs e)
-        {
-
-        }
+        //drawpacman
+        //drawpellets
+        //drawgameboard
  
     }
 }

@@ -9,30 +9,48 @@ using System.Windows.Forms;
 
 namespace Moving_pacman_object
 {
-    class Enemy: Mover
+    public class Enemy: Mover
     {
         public Color GhostColor;
         public Bitmap BmpCharUp1;
-        //GameBoard gameBoard;
-        //public Direction CurrentDirection;
+
         public List<Direction> DirectionList = new List<Direction>();
 
-        public void WhichDirectionCanMove(Point p, GameLogic gameBoard)
+        public Point ImageCurrentLocation
+        {
+            get { return _imageCurrentLocation; }
+            set { _imageCurrentLocation = value; }
+        }
+
+        public Point ImageStartingLocation
+        {
+            get { return _imageStartingLocation; }
+            set { _imageStartingLocation = value; }
+        }
+
+        public Direction CurrentDirection
+        {
+            get { return _currentDirection; }
+            set { _currentDirection = value; }
+        }
+
+    
+        public void WhichDirectionCanMove(Point p, List<Point> _pathPoints)
         {
 
-            if (gameBoard.CanMove(p, Direction.Right))
+            if (CanMove(p, Direction.Right, _pathPoints))
             {
                 DirectionList.Add(Direction.Right);
             }
-            if (gameBoard.CanMove(p, Direction.Left))
+            if (CanMove(p, Direction.Left, _pathPoints))
             {
                 DirectionList.Add(Direction.Left);
             }
-            if (gameBoard.CanMove(p, Direction.Up))
+            if (CanMove(p, Direction.Up, _pathPoints))
             {
                 DirectionList.Add(Direction.Up);
             }
-            if (gameBoard.CanMove(p, Direction.Down))
+            if (CanMove(p, Direction.Down, _pathPoints))
             {
                 DirectionList.Add(Direction.Down);
             }
@@ -51,12 +69,10 @@ namespace Moving_pacman_object
 
         }
 
-        public void DrawEnemyImage(Graphics _graphics, List<Enemy> _enemies)
-        {
-            for (int i = 0; i < _enemies.Count(); i++)
-            {
-                _graphics.DrawImageUnscaled(_enemies[i].BmpCharUp1, ImageCurrentLocation.X - 15, ImageCurrentLocation.Y - 15);
-            }
+        public void DrawEnemyImage(Graphics graphics)
+        {         
+                graphics.DrawImageUnscaled(BmpCharUp1, _imageCurrentLocation.X - 15, _imageCurrentLocation.Y - 15);
+            
         }
 
 
